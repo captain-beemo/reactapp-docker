@@ -1,0 +1,22 @@
+version: '3'
+services:
+    web:
+        stdin_open: true
+        build: 
+            # 
+
+            context: . # specify the working directory, which is currently working directory.(root)
+            dockerfile: Dockerfile.dev # specify which dockerfile to work on, by default, it should be Dockerfile
+        ports:
+            - "3000:3000"
+        volumes:
+            - /app/node_modules # tell the docker ignore mapping the node_modules 
+            - .:/app # tell the docker map the currently working directory to container app folder
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes: 
+            - /app/node_modules
+            - .:/app
+        command: ["npm","run","test"]
